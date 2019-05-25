@@ -1,0 +1,33 @@
+chkconfig     (check config)
+	作用：提供"开机启动项"的一个自启管理服务
+
+	在linux下不是所有的软件安装完成之后都有开机启动服务，有时候需要自己去添加。除此之外还可以查看和删除。
+
+	1、开机启动服务查询
+		#chkconfig --list
+			其中0-6表示各个启动级别，对应开机的启动级别，表示在哪种开机状态下开启服务。
+			例如:httpd为例，其3级别为关闭，表示在3命令行模式下开机不自启；其5级别为关闭，表示在5桌面环境下也是开机不自启的。
+		
+	2、删除服务
+		#chkconfig --del 服务名
+		例如：删除httpd服务
+			#chkconfig --del httpd
+			#chkconfig --list|grep httpd
+
+	3、添加开机启动服务
+		#chkconfig --add 服务名    (必须要保证服务可以正常运行，添加才有效)
+
+		例如：添加httpd服务
+			#chkconfig --add httpd
+			#chkconfig --list|grep httpd
+
+*	4、设置服务在某个级别下开机启动/不启动 【重要】
+		#chkconfig --level 连在一起的启动级别 服务名 on/off
+
+		案例：设置httpd服务在3、5级别下默认开机启动
+			#chkconfig --level 35 httpd on
+			#chkconfig --list|grep httpd
+
+		案例：设置httpd服务在5级别下默认开机不启动
+			#chkconfig --level 5 httpd off
+			#chkconfig --list|grep httpd

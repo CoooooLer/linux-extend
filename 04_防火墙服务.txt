@@ -1,0 +1,38 @@
+防火墙服务
+	作用：防范一些网络攻击。有软件防火墙和硬件防火墙之分。
+	防火墙选择让请求通过，从而保证网络安全。
+	在当前的centos6.5中防火墙有一个名称：iptables  (7.X中默认使用的是firewalld)
+
+	1、查看iptables是否启动
+		#chkconfig --list|grep iptables
+
+	2、iptables服务启动/重启/关闭
+		#service iptables start/stop/restart
+		#/etc/init.d/iptables start/stop/restart
+
+	3、查看iptables的状态（规则）
+		#service iptables status
+
+	4、查看规则的命令
+		#iptables -L -n
+		含义：
+			-L：表示列出规则
+			-n:	表示将单词表达式改成数字形式显示
+
+	5、简单设置防火墙规则
+		例如：允许80端口通过防火墙
+		#iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+		#iptables -I INPUT -p tcp --dport 80 -j ACCEPT   可用的
+			-A: append
+			-I: insert
+			IPUT： 进站请求 【出站output】
+			-p： protocol，指定协议 (icmp/tcp/upd)
+			--dport： 指定端口号
+			-j： 指定行为结果，允许（accept）/禁止（reject）
+		添加完成之后，需要进行保存操作：
+			#service iptables save
+			或者：
+			#/etc/init.d/iptables save
+
+	6、删除一条防火墙规则
+		#iptables -D INPUT 8  	表示删除INPUT链的第8条规则
