@@ -24,3 +24,39 @@ rpm
 			软件包的获得方式：
 				1、去官网下载
 				2、不介意老版本的话，可以从光盘（或者镜像文件）读取
+
+		以光盘文件为例：
+			查看块状设备的信息：
+				#lsblk 		(list block devices)	查看块状设备信息
+			执行#lsblk的字段说明：
+				name: 名称
+				size： 大小
+				type： 类型
+				mountpoint: 挂载点（类似windows下的盘符）
+
+		扩展：光盘的挂载和解挂  （类似windows的盘符，如U盘）
+			解挂操作
+				命令： umount
+				语法： #umount 当前设备的挂载点（路径）
+				例如： #umount /media/CentOS_6.5_Final   
+
+			挂载操作
+				命令： mount
+				语法： #mount 设备原始地址 要挂载的路径
+				设备原始地址：都在/dev下，然后根据大小确定name值，拼凑在一起组成原始地址，例如： dev/sr0
+				要挂载的位置路径：挂载目录一般都在 mnt 下，也可以在mnt下新建目录
+				例如：在/mnt/dvd下挂载sr0
+					#mkdri /mnt/dvd
+					#ls -r /mnt
+					#mount /dev/sr0 /mnt/dvd
+
+		安装软件的命令
+			#rpm -lvh 软件包完整名称
+			选项：
+				-l: install
+				-v: 显示进度条
+				-h: 表示以“#”形式显示进度条
+			案例：重新安装火狐浏览器
+				#ls -a|grep firefox
+				#rpm -i firefox-17.0.10-1.el6.centos.x86_64.rpm
+				#rpm -qa|grep firefox
