@@ -1,0 +1,80 @@
+变量的定义与使用
+	变量必须先定义后使用。
+		定义形如： class_name="yunwei"
+		使用形如： echo $class_name
+
+	在使用变量的时候一定要在变量名前添加一个 $ 符号。
+
+	案例：输出hello world
+		#touch test3.sh
+		#vim ./test3.sh
+		#!/bin/bash
+		str="hello world"
+		echo $str   或者   echo "$str"
+		:x
+		chmod u+x test3.sh
+		ll test3.sh
+		./test3.sh
+
+	关于单双引号：
+		单引号不会解析变量，不能转义
+		双引号会解析变量，可以转义
+
+	案例：输出当前时间
+		#touch test4.sh
+		#vim /test4.sh
+		#!/bin/bash
+		dt=`date +"%F %T"`    (反引号)
+		echo $dt
+		:x
+		chmod u+x test4.sh
+		./test4.sh
+
+	注意：反引号（esc键下方的按个键），当在脚本中需要执行一些指令并且将执行的结果赋给变量的时候需要使用'反引号'
+
+
+只读变量
+	语法： readonly 变量名
+
+	案例：定义变量a并且赋值为10，随后设置其为只读变量，再去尝试重新赋值。
+		#touch test5.sh
+		#vim test5.sh
+		#!/bin/bash
+		a=10
+		readonly a
+		a=20
+		echo $a
+		:x
+		chmod u+x test5.sh
+		./test5.sh
+
+
+*接收用户输入
+	语法： read -p 提示信息 变量名
+
+	案例：编写一个脚本test6.sh，要求执行之后提示用户输入文件的名称（路径），然后自动为用户创建该文件。
+		#touch test6.sh
+		#vim test6.sh
+		#!/bin/bash
+		read -p '请输入文件的路径：' filepath
+		touch $filepath
+		echo $filepath +'创建成功！'
+		ls -l $filepath
+		#chmod u+x test6.sh
+		#./test6.sh
+
+
+删除变量
+	语法： unset 变量名
+	案例： 定义变量b=20，在输出b的值，随后删除b，最后输出b
+		#touch test7.sh
+		#vim test7.sh
+		#!/bin/bash
+		b=20
+		echo $b
+		unset b
+		echo $b
+		:x
+		#chmod u+x test7.sh
+		#./test7.sh
+

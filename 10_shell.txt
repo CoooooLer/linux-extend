@@ -1,0 +1,53 @@
+nologin
+	指用户不能登录
+	例如：指定aop用户允许登录到操作系统
+		#usermod -s /sbin/nologin aop
+		#vim /etc/passwd
+
+
+shell 入门
+	编写规范：
+		代码规范：
+			#！/bin/bash  		[指定告知系统当前这个脚本要使用的shell解释器]
+			shell 相关指令
+
+		文件命名规范：
+			文件名.sh 		.sh是linux下bash shell 的默认后缀
+
+		使用流程：
+			1、创建.sh文件		touch/vim
+			2、编写shell代码
+			3、执行shell代码		脚本必须得有执行权限
+
+		案例：创建test.sh,实现第一个shell脚本程序，输出hello world,
+			输出命令： #echo 124
+			注意： 输出的内容如果包含字母和符号（不包含变量），则需要用引号包括起来。如果是纯数字可以包也可以不包。
+
+			#touch test.sh
+			#vim test.sh
+			#！/bin/bash
+			echo 'hello world'
+			:x
+			ll test.sh
+			chmod +x test.sh
+			ll test.sh
+			./test.sh
+
+		注意：这里运行时一定要写成 ./test.sh ，运行其它二进制的程序也一样，直接写 test.sh 系统回去 PATH 里寻找有没有叫 test.sh 的，而只有 /bin, /sbin, /usr/bin
+		, /usr/sbin 等在PATH里，你的当前目录通常不在path里，所以写成 test.sh 是找不到明亮能够的，要用 ./test.sh 告诉系统，就在当前目录找。
+
+
+		案例2：使用root账户创建并执行test2.sh ,实现创建一个shelltest用户，并在其家目录中新建文件try.html
+			#touch test2.sh
+			#vim test2.sh
+			#!/bin/bash
+			useradd shelltest
+			touch /home/shelltest/try.html
+			:x
+			#chmod u+x test2.sh
+			#/bin/bash test.sh
+			#ls /home/shelltest
+
+		脚本执行的另一个方式: /bin/bash 脚本的路径
+
+		shell脚本分为简单的写法（简单命令的堆积）和复杂写法（程序的设计）。

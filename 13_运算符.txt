@@ -1,0 +1,113 @@
+在shell中，运算符和其他编程脚本语言一样，常见的有算数运算符、关系运算符、逻辑运算符、字符串运算符、文件测试运算符等
+	1、算数运算符 （见图片）
+
+		案例：
+			#vim test8.sh
+			#!/bin/bash
+			#两个变量的初始赋值
+			a=10
+			b=20
+			echo    
+			echo 'a + b = ' `expr $a + $b`
+			echo 'a - b = ' `expr $a - $b`
+			echo 'a * b = ' `expr $a \* $b`
+			echo 'a / b = ' `expr $a / $b`
+			echo 'a % b = ' `expr $a % $b`
+
+			#判断两个数是否相等
+			if [ $a == $b ]
+			then
+				echo 'a等于b'
+			else
+				echo 'a不等于b'
+			fi
+
+			#判断两个数是否不相等
+			if [ $a != $b ]
+			then
+				echo 'a不等于b'
+			else
+				echo 'a等于b'
+			fi
+
+	2、关系运算符
+		-eq: equal   				相等
+		-ne: not equal  			不相等
+		-gt: great than				大于
+		-lt: less than				小于
+		-ge: great than or equal	大于等于
+		-le: less than or equal		小于等于
+
+		案例：a=10,b=20
+			#vim test9.sh
+			#!/bin/bash
+			a=10
+			b=20
+			echo "a=$a"
+			echo "b=$b"
+			echo
+
+			if [ $a -eq $b ]
+			then
+				echo 'a等于b'
+			else
+				echo 'a不等于b'
+			fi
+
+			if [ $a -ne $b ]
+			then
+				echo 'a不等于b'
+			else
+				echo 'a等于b'
+			fi
+
+			if [ $a -gt $b ]
+			then
+				echo 'a大于b'
+			else
+				echo 'a小于b'
+			fi
+
+			if [ $a -lt $b ]
+			then
+				echo 'a小于b'
+			else
+				echo 'a大于b'
+			fi
+
+			if [ $a -ge $b ]
+			then
+				echo 'a大于等于b'
+			else
+				echo 'a小于等于b'
+			fi
+
+			if[ $a -le $b ]
+			then
+				echo 'a小于等于b'
+			else
+				echo 'a大于等于b'
+			fi
+
+	3、逻辑运算符
+		!: 非
+		-o: 或
+		-a: 与
+
+		案例：a=10,b=20
+			#vim test11.sh
+			#!/bin/bash
+			a=10
+			b=20
+			echo
+
+			if [ !$a ]
+			then
+				echo '假'
+			fi
+
+			if [ $a -gt $b -o $a -eq 20]
+			then
+				echo '真'
+			fi
+

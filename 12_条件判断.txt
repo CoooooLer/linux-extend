@@ -1,0 +1,35 @@
+if条件判断
+	语法1：
+		if condition
+		then
+			command1
+			command2
+			...
+		fi
+
+
+	单行语法：
+		if[condition];then command;fi
+
+
+	语法2：
+		if condition
+		then
+			command1
+			command2
+			...
+		else
+			command
+		fi
+
+
+	语法3：
+		if condition1
+		then
+			command1
+		elseif condition2
+		then
+			command2
+		else
+			commandN
+		fi

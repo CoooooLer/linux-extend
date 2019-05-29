@@ -1,0 +1,36 @@
+ping
+	作用： 检测当前主机与目标主机之间的连通性（不是100%准确，有的服务器禁ping）
+	语法： #ping 主机地址（ip地址、主机名、域名等）
+
+netstat
+	作用：表示查看网络的连接的信息
+	语法： #netstat -tnlp 
+		-t: tcp协议
+		-n: 将字母转化成数字
+		-l: 列出状态为监听
+		-p: 显示进程相关信息
+
+		#netstat -an
+			-a: 表示全部
+			-n: 将字母转化为数字
+
+traceroute
+	作用：查找当前主机与目标主机之间的所有网关（路由器，会给沿途各个路由器发送ICMP数据包，路由器可能不会响应）
+	该命令不是内置命令，需要安装，但是目前的已经安装好了（之前选了开发工具）
+	语法： #traceroute 主机地址
+
+
+arp
+	地址解析协议，即ARP（Address Resolution Protocol），是根据ip地址获取（MAC）物理地址的协议
+	语法： #arp -a    查看本地缓存mac表
+		   #arp -d 主机地址 	删除指定的缓存记录 
+
+tcpdump
+	作用： 抓包，抓取数据表
+	常用语法：
+		#tcpdump 协议 port 端口
+		#tcpdump 协议 port 端口 host 主机
+		#tcpcump -i 网卡设备名
+
+	案例：查看22(ssh)端口的包
+		#tcpdump prot 22
