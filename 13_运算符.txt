@@ -111,3 +111,123 @@
 				echo '真'
 			fi
 
+	4、字符串运算符
+		假设：a='abc',b='xyz'
+		=: 检测两个字符串是否相等，相等返回true，[ $a = $b] 返回false
+		!=: 检测两个字符串是否相等，不相等返回true， [ $a != $b ] 返回true
+		-z: 检测字符串长度是否为0，为0返回true  [ -z $a ] 返回
+		false
+		-n: 检测字符串长度是否为0，不为0返回true，  [ -n $a ] 返回true
+		str: 检测字符串是否为空，不为空返回true，  [ $a ] 返回 true  
+
+		案例：
+			#vim test12.sh
+			#!/bin/bash
+			a='abc'
+			b='xyz'
+			echo
+			if [ $a = $b ]
+			then
+				echo 'true'
+			else
+				echo 'false'
+			fi
+
+			if [ $a != $b ]
+			then
+				echo 'true'
+			else
+				echo 'false'
+			fi
+
+			if [ -z $a ]
+			then
+				echo 'true'
+			else
+				echo 'false'
+			fi
+
+			if [ -n $a ]
+			then
+				echo 'true'
+			else
+				echo 'false'
+			fi
+
+			if [ $a ]
+			then
+				echo 'true'
+			else
+				echo 'false'
+			fi
+
+
+*   文件测试运算符
+	作用：文件测试运算符用于检测Unix/linux文件的各种属性。
+	语法：
+		-d file: 检测文件是否是目录，如果是，则返回true  [ -d $file ]  返回false
+		-f file: 检测文件是否是普通文件(既不是目录，也不是设备文件)，如果是，返回true。  [ -f $file ]  返回 true
+		-r file: 检测文件是否可读，如果是，则返回true， [ -r $file ] 返回 true
+		-w file: 检测文件是否可写，如果是，则返回true， [ -w $file ]  返回 true
+		-x file: 检测文件是否可执行，如果是，则返回true， [ -x $file ]  返回true
+		-s file: 检测文件是否为空（文件大小是否等于0），不为空返回true。 [ -s $file ]  返回 true
+		-e file: 检测文件（包括目录）是否存在，如果是，则返回true。 [ -e $file ]  返回 true 
+
+	案例：
+		#vim test13.sh
+		#!/bin/bash
+		filepath = '/root/test.txt'
+		echo 
+
+		if [ -d $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -f $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -r $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -w $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -x $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -s $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+		if [ -e $filepath ]
+		then
+			echo 'true'
+		else
+			echo 'false'
+		fi
+
+
+
+

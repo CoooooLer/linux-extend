@@ -1,0 +1,85 @@
+*操作之前先确保计算机时间的准确。
+	#date+ "%F %T"
+	#service ntpd start
+
+
+1、源码包
+	优点：
+		开源，如果有足够的能力，可以修改源代码
+		编译安装，更加适合自己的系统，稳定高效
+	缺点：
+		安装步骤较多，容易出错
+		编译过程时间较长
+
+	案例：使用源码编译安装方式安装ncurses（一种常用的终端库）
+
+		扩展：解包
+		常用语法：
+			#tar -zxvf *.tar.gz        	(大多数)
+			#tar -jxvf *.tar.bz2
+		选项含义：
+			-z或--gzip或--ungzip: 通过gzip指令处理文件
+			-x或--extract或--get: 从文件中还原文件
+			-v: 显示操作过程
+			-f或--file: 指定一个文件
+			-j: 支持bzip2解压文件
+
+		1、将软件包ncurses传递到服务器上"/usr/local/src"
+		2、解压需要安装的源码包
+			#cd /usr/local/src/
+			#tar -zxvf ncurses-6.1.tar.gz
+		3、切换到源码文件夹，然后执行后续操作
+			#cd ncurses-6.1
+			#ls
+
+			配置（config/configure/bootstrap）=>编译(make/bootstrapd)=>安装(make install/bootstrapd install)
+
+				配置操作主要是指定软件的安装目录、需要的依赖在什么地方、指定不需要可选依赖、配置文件的路径、通用数据存储位置等等。
+				指定的安装的路径： --prefix=路径
+				需要依赖的路径: --with-PACKAGE=包所在的路径
+				不需要依赖: --without-PACHAGE
+
+			#./configure --prefix=/usr/local/ncurses
+			#make
+			#make install
+			#ls /usr/local/ncurses/     (检查目录是否安装成功)
+
+
+2、二进制包（rpm）
+	优点：包管理系统简单，只需要几个命令就可以实现包的安装，升级、查询和卸载
+	缺点：经过编译，看不到源码
+
+	回顾rpm相关指令：
+		#rpm -qa|grep 关键词
+		#rpm -e 关键词 [--nodeps]
+		#rpm -ivh 完整名称
+		#rpm -Uvh 完整名称
+		#rpm -qf 文件路径 				(查询指定文件属于哪个包)
+
+	案例：使用二进制包安装lynx（一款纯命令行的浏览器，光盘中自带这个包）
+
+	#lsblk
+	#mkdir /mnt/dvd
+	#mount /dev/sr0 /mnt/dvd/
+	#rpm -ivh /mnt/dvd/Packages/lynx-2.8.6-27.el6.x86_64.rpm
+	#lynx --dump www.baidu.com    		(查看百度)
+
+
+
+3、yum 等傻瓜式安装
+	优点： 安装简单，快捷
+	缺点： 完全丧失了自定义行
+	注意： 如果不更改软件来源的情况下，是需要联网才能使用yum的
+
+		常用的yum命令：
+			#yum list 				列出当前已经安装的和可以安装的软件（全部）
+			#yum search 		搜索指定关键词的包
+			#yum [-y] install 包名 		安装指定的包（-y表示允许不再确认）
+			#yum [-y] update  [包名]  	更新指定的包，不指定则更新全部软件
+			#yum [-y] remove 包名 		卸载指定的包
+
+
+	案例：卸载火狐浏览器
+		#yum remove firefox
+		#rpm -qa|grep firefox
+		#yum install firefox

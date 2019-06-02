@@ -1,0 +1,30 @@
+*mysql的基本操作
+	1、名词介绍
+		数据库：
+		数据表：
+		行（记录）：
+		列（字段）：
+
+
+	2、库操作
+		#mysql -u root -p 			(进入数据库)
+		以下命令在mysql终端命令行中执行（命令不区分大小写）：
+			SHOW DATABASES;  		显示当前mysql中所有的数据库
+			CREATE DATABASE 库名: 	创建数据库
+			DROP DATABASE 库名:	 	删除数据库
+			USE 库名:				切换数据库
+
+
+	3、表操作
+		SHOW TABLES:			显示当前数据库中所有的表（必须先use数据库）
+
+		CREATE TABLE 表名称
+		(
+			列名称1 数据类型 [NOT NULL AUTO_INCREMENT],
+			列名称2 数据类型，
+			列名称3 数据类型，
+			......,
+			PRIMARY KEY(主键)
+		);
+
+		

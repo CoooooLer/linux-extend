@@ -1,0 +1,50 @@
+问题描述：在linux shell中如何处理tail -10 assess.log 这样的命令选线？
+步骤：
+	调用tail指令
+	系统把后续选项传递给tail
+	tail先去打开指定文件
+	取出最后10行
+
+问题：自己写的shell是否也可以像内置命令一样传递一些选项呢
+	是可以的，传递方式与上述的描述是一样的，管事怎么接收。例如：
+		传递：
+			#./test.sh a b c
+		接收：
+			在脚本中可以用"$1"来表示a,"$2"来表示b,以此类推。
+
+			接收可以用"$"加上选项对应的序号即可。
+
+测试：编写test14.sh,传递给a, b, c输出其值。
+	#vim test14.sh
+	#!/bin/bash
+	echo $0 $1 $2 $3   ($1 $2 是变量)
+	:x
+	#chmod u+x test14.sh
+	#./test14.sh 1 2 3
+
+
+案例：创建自定义指令"user",可以直接执行，要求改指令具备以下语法和功能。
+	1、 #user -add 用户名 		（添加用户）
+	2、 #user -del 用户名			（删除用户及其家目录）
+
+	#vim test15.sh
+	#!/bin/bash
+	if [ $1 = '-add' ]
+	then
+		useradd $2
+		echo '添加$2成功'
+	else
+		userdel -r $2
+		echo '删除$2成功'
+	fi
+	#chmod u+x test15.sh
+	#./test15 -add user007
+	#cat /etc/passwd
+	#ls /home/
+
+	因为是需要指令完成操作，所以改造如下：
+	#vim ~./bashrc
+	alias user='/root/test15.sh'
+	#su
+	#user -add user007
+	#cat /etc/passwd

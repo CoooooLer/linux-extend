@@ -1,0 +1,28 @@
+以yum安装为例。
+
+安装mysql
+	#yum install mysql-server
+
+MySQL初始化
+	#service mysqld start    (d:表示守护进程)
+	#netstat -tnlp     	(查看端口号3306)
+	#mysql_secure_installation
+
+	Enter current password for root (enter for none):（这个是数据库root用户）
+	remove anonymous users?   是否移除匿名用户，选择y
+	Disallow root login remotely？ 是否允许root远程登录，默认是y不允许
+	reload privilege table now?   是否重新加载权限表（当我们更改了MySQL用户相关的信息之后建议去重载权限）
+
+MySQL的启动控制
+	语法：
+		service mysqld start/stop/restart
+	进入MySQL的方式：
+		#mysql -u 用户名 -p
+
+	退出mysql到Linux命令行：
+		mysql>exit
+
+
+默认目录/文件位置
+	数据库存储目录： /var/lib/mysql
+	配置文件: /etc/my.cnf
