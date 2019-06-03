@@ -1,0 +1,17 @@
+1、mysql的远程管理工具
+	分为两大类： B/S架构（浏览器/服务器）、C/S架构（客户端/服务器）
+
+	在BS中，mysql有个典型的管理工具： PMA（phpMyAdmin）
+	CS中比较典型的软件：Navicat、mysql workbrach
+	
+	允许mysql远程登录：
+		1、先进入数据库选择mysql数据库
+			use mysql;
+		2、执行SQL语句：
+			select host,user from user;
+		3、将其中的一个记录的host值改为"%"，表示可以允许任何地方登录。
+			update user set host = '%' where host = 'yunwei';
+			select host,user from user;
+		4、刷新权限表或者重启mysql
+			刷线权限：mysql> flush privileges;
+			重启： #service mysqld restart;

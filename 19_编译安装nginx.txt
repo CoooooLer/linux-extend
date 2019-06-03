@@ -1,0 +1,32 @@
+一、编译安装与卸载Nginx
+	1、安装Nginx
+		下载地址：http://nginx.org/en/download.html
+		使用在服务器端下载的方式进行下载：
+			#wget 地址
+
+		例如下载Nginx到"/usr/local/src"
+			#cd /usr/local/src
+			#wget http://nginx.org/download/nginx-1.17.0.tar.gz
+			#tar -zxvf nginx-1.17.0.tar.gz
+			#wget http://www.zlib.net/zlib-1.2.11.tar.gz
+			#tar -zxvf zlib-1.2.11.tar.gz
+			#cd ./nginx-1.17.0   进入Nginx解压目录，开始进行配置、编译、安装操作
+			#ls
+			#./configure --prefix=/usr/local/nginx
+			没有PCRE库，报错：
+			#yum install pcre-devel
+			#./configure --prefix=/usr/local/nginx --with-pcre
+			#yum install zlib-devel
+			#./configure --prefix=usr/local/nginx --with-pcre --with-zlib=/usr/local/src/zlib-1.2.11
+			#./configure --prefix=usr/local/nginx 
+			#make
+			#make install
+			#ls /usr/local/nginx
+			#service httpd stop
+			#/usr/local/nginx/sbin/nginx    (启动命令)
+			#/usr/local/nginx/sbin/nginx -s reload  	(重载，重载配置文件)
+
+
+	2、卸载编译安装的软件
+		#rm -rf 软件的安装目录
+		注意： 卸载一个编译安装的软件的时候必须先停止。

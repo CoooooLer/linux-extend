@@ -7,6 +7,7 @@
 
 
 	2、库操作
+		#service mysqld start    (d:表示守护进程)
 		#mysql -u root -p 			(进入数据库)
 		以下命令在mysql终端命令行中执行（命令不区分大小写）：
 			SHOW DATABASES;  		显示当前mysql中所有的数据库
@@ -24,7 +25,119 @@
 			列名称2 数据类型，
 			列名称3 数据类型，
 			......,
-			PRIMARY KEY(主键)
+			PRIMARY KEY(主键字段名)
 		);
 
+		常见的数据类型：int(整形)、char(定长字符型)、varchar（不定长字符型）
+		主键一般就是序号所在的那一列（主键不能重复）
+		DESC 表名; 				描述一个数据表（查看表结构）
+		DROP TABLE [IF EXISTS] 表名; 		删除一个数据表
+
+		案例：查看数据表	
+			#show databases;
+			#use mysql;
+			#show tables;
+
+		创建数据表（test库创建）							
+		要求：表名xg，要求有一下字段：
+			id字段，11位整形，不为空，自增，主键
+			username字段，varchar类型，20长度
+			password字段，char类型，32长度
+			
+		SQL（standard query language）语句:
+			create table xg(
+				id int(11) not null auto_increment,
+				username varchar(20),
+				password char(32),
+				primary key(id)
+			);
+			show tables;
+			desc xg;
+			drop talbe if exists xg;
 		
+*	4、记录/字段操作
+		4.1、增加记录
+			语法1：insert into 表名称 values (值1，值2,......)
+			语法2： insert into 表名称（列1，列2，......） values （值1，值2，......）
+
+		案例：往数据表xg表中新增一个记录username位zhangsan,password为123456(加密结果：	E10ADC3949BA59ABBE56E057F20F883E)
+
+		sql语句：
+			insert into xg (username,password) values ('zhangsan','E10ADC3949BA59ABBE56E057F20F883E');
+
+		要求前面的列名与值要一一对应。
+
+	 	4.2、更新记录
+	 		语法：update 表名称 set 列名称1 = 新值1，列名称2 = 新值2...where 列名称 = 某值;
+
+	 		案例：更新id大于等于2的记录，将其密码改为：	25F9E794323B453885F5181F1B624D0B
+	 		sql语句：
+	 			update xg set password = '	25F9E794323B453885F5181F1B624D0B' where id>=2;
+
+ 		4.3、查询记录
+ 			select 列名称 from 表名称 where 条件;
+
+ 			select * from 表名称 where 条件;
+
+ 			案例：查询刚才新增的记录。
+ 				只查用户名和密码，并且id=2的：
+ 				select username,password from xg where id = 2;
+
+ 				查询全部：
+ 					select * from xg;
+
+		4.4、删除记录
+			delete from 表名称 where 列名称 = 值;
+
+			案例：删除id为2的记录
+				delete from xg where id = 2;
+
+*	5、备份与还原（Linux命令行执行）
+		5.1、备份(导出)
+			全量备份（数据+结构）： #mysqldump -uroot -p123456 -A > 备份文件路径
+			指定库备份（数据+结构）： #mysqldump -uroot -p123456 库名 > 备份文件路径
+			多个库备份（数据+结构）： #mysqldump -uroot -p123456 --databases db1 db2 > 备份文件路径
+
+		案例：备份整个库
+		#mysqldump -uroot -p123456 -A >/root/sql_20190602.sql
+
+		案例：每1分钟自动备份1次test数据库
+			#vie test19.sh
+			#!/bin/bash
+			filename="test_"`date +'%Y%m%d%H%M%S'`".sql"
+			echo $filename
+			mysqldump -uroot -p123456 test > /root/$filename
+			#chmod u+x ./test19.sh
+			#./test19.sh
+			#crontab -e
+			* * * * * /root/test19.sh
+
+		5.2、还原(导入)
+			还原部分：
+				1、mysql命令行source方法
+				2、系统命令行方法
+
+					1.还原全部数据库
+*						1.1 mysql命令行： mysql> source 备份文件路径
+						1.2 系统命令行： #mysql -uroot -p123456 < 备份文件路径
+*					2.还原单个数据库(需指定数据库)
+*						(1) mysql> use 库名
+*							mysql> source 备份文件路径
+						(2) #mysql -uroot -p123456 库名 < 备份文件路径
+
+					3.还原单个数据库的多个表(需指定数据库)
+						(1) mysql > use 库名
+							mysql> source 备份文件路径
+						(2) mysql -uroot -p123456 库名 < 备份文件路径
+					4.还原多个数据库(一个备份文件里有多个数据库的备份，此时不需要指定数据库)
+						(1) mysql命令行: mysql> source 备份文件路径
+						(2) 系统命令行: mysql -uroot -p123456 < 备份文件路径
+
+			注意：设置mysql连接字符集
+				mysql> set names utf8;     [三码一致，服务器端+传输过程中+客户端]
+
+			案例：人为删除xg表（模拟数据表丢失），然后通过最后一次备份还原数据表。
+				show tables;
+				drop table xg;
+				show tables;
+				source /root/test_20190603144701.sql
