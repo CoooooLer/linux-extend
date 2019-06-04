@@ -16,7 +16,9 @@
 			<?php
 			phpinfo();
 
+2、安装mysql(同以前一样，云服务器需要开启22端口、80端口、3306端口)
 
-
-2、安装mysql
-	
+	#yum install mysql-server 
+	初始化操作
+		#service mysqld start
+		#mysql_se
